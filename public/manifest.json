@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "manifest_version": 3,
+  "name": "Highlight-Share",
+  "description": "View and Share your highlights with you friends and within a community of readers",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "activeTab", "scripting", "contextMenus", "tabs"],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "host_permissions": ["http://*/", "https://*/"],
+  "icons": {
+    "16": "/images/Book-Shelf-16.png",
+    "32": "/images/Book-Shelf-32.png",
+    "48": "/images/Book-Shelf-48.png",
+    "64": "/images/Book-Shelf-64.png",
+    "128": "/images/Book-Shelf-128.png"
+  }
+}

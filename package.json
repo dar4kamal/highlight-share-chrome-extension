@@ -1,0 +1,49 @@
+{
+  "name": "highlight-share-chrome-extension",
+  "version": "1.0.0",
+  "description": "A Chrome Extenstion where you can view and share your highlights with you friends and within a community of readers",
+  "main": "index.js",
+  "scripts": {
+    "postcss": "postcss src/styles/index.css --dir dist",
+    "postcss:watch": "postcss index.css --dir dist --watch",
+    "dev": "webpack --watch --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "keywords": [
+    "Chrome-Extension",
+    "React",
+    "Webpack"
+  ],
+  "author": "Mostafa Kamal",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "formik": "^2.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "autoprefixer": "^10.4.2",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "css-loader": "^6.6.0",
+    "cssnano": "^5.0.17",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "postcss": "^8.4.6",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.2.1",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.23",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-merge": "^5.8.0"
+  }
+}
