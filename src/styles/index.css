@@ -9,3 +9,7 @@ svg path {
 .external-link {
   @apply px-1 cursor-pointer text-sky-500 hover:text-sky-300;
 }
+
+.action-icon {
+  @apply w-8 h-8 cursor-pointer hover:text-white;
+}
