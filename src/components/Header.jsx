@@ -69,12 +69,12 @@ const Header = () => {
         currentOption={currentOption}
         MenuIcon={() => (
           <div className="p-2">
-            <AdjustmentsIcon className="w-8 h-8 stroke-1" strokeWidth={1} />
+            <AdjustmentsIcon className="w-8 h-8" />
           </div>
         )}
       />
       <div
-        className="mr-5 cursor-pointer hover:scale-110 hover:stroke-2"
+        className="flex gap-1 p-5 mr-5 cursor-pointer hover:bg-white hover:bg-opacity-10 hover:stroke-2 hover:text-white"
         onClick={() => showAuthModal()}
       >
         <FingerPrintIcon className="w-8 h-8" />

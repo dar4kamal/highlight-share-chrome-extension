@@ -2,7 +2,7 @@ import React from "react";
 
 const FilterMenu = ({ options, MenuIcon, currentOption, UpdateOption }) => {
   return (
-    <div className="inline-block group">
+    <div className="z-50 inline-block group">
       <div className="flex items-center px-3 py-1 rounded-sm outline-none cursor-pointer min-w-32 focus:outline-none">
         <span className="flex-1 pr-1 font-semibold">
           {currentOption?.title}
