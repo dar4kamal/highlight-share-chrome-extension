@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { defaultGetRequest } from "../../utils/axiosMethods";
 
 import Spinner from "./Spinner";
-
-const fetchQuote = async () => {
-  const res = await fetch(`https://zenquotes.io/api/random`);
-  return await res.json();
-};
 
 const QuoteCard = () => {
   const [dailyQuote, dailyQuoteSet] = useState(null);
 
   useEffect(async () => {
-    const fetchedQuote = await fetchQuote();
-    dailyQuoteSet(fetchedQuote[0]);
+    const quoteList = await defaultGetRequest(
+      "https://zenquotes.io/api/random"
+    );
+    dailyQuoteSet(quoteList[0]);
   }, []);
 
   return !dailyQuote ? (

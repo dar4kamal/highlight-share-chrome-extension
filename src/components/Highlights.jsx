@@ -1,43 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-import HighlightCard from "./units/HighlightCard";
 import Spinner from "./units/Spinner";
+import HighlightCard from "./units/HighlightCard";
 
-const API_URL = "http://localhost:5000/api";
-
-const fetchAPI = async () => {
-  const res = await fetch(`${API_URL}/highlights/all`);
-  return await res.json();
-};
-
-/* 
-TODO 
-- cases to count for
-? >> request success
-  ? >> data fetched
-  ? >> no data yet 
-? >> Errors
-  ? >> server error
-  ? >> network error 
-*/
+import getselectedHighlights from "../utils/getselectedHighlights";
 
 const Highlights = ({ currentOption }) => {
-  const [data, dataSet] = useState(null);
+  const [highlights, highlightsSet] = useState(null);
 
   useEffect(async () => {
-    dataSet(await fetchAPI());
-  }, []);
+    highlightsSet(await getselectedHighlights(currentOption));
+  }, [currentOption]);
 
-  return !data ? (
+  return !highlights ? (
     <Spinner />
   ) : (
     <div className="flex flex-col items-center justify-center gap-5">
       <p className="text-center lg:hidden">Highlights</p>
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
-        {data.result.map((item) => (
-          <HighlightCard highlight={item} key={item.content} />
-        ))}
-        {data.result.map((item) => (
+        {highlights.map((item) => (
           <HighlightCard highlight={item} key={item.content} />
         ))}
       </div>
