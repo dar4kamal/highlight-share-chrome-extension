@@ -127,7 +127,7 @@ const Login = ({ tokenSet, closeModal }) => {
           type="submit"
           className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
         >
-          <span className="mr-2">Login</span>
+          <span className="mr-2">Sign In</span>
           <span>
             <ArrowCircleRightIcon className="w-6 h-6" />
           </span>

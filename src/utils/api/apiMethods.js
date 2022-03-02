@@ -26,7 +26,12 @@ export const ApiMethodWrapper = async (apiMethod, args) => {
     } = response;
 
     if (errors.length > 0) {
-      errors.forEach((err) => toast.error(err.message));
+      errors.forEach((err) =>
+        toast.error(err.message, {
+          bodyClassName: "text-red-500",
+          className: "text-base",
+        })
+      );
     }
     return result;
   } catch (error) {

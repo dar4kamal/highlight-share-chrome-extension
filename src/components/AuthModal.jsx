@@ -16,7 +16,7 @@ const AuthModal = (props) => {
       <div className="flex items-center justify-center mt-6">
         <div className="inline-flex items-center text-base font-medium text-center text-gray-700">
           <AuthOption
-            actionText={`${islogging ? "Register" : "Login"}`}
+            actionText={`${islogging ? "Sign Up" : "Sign In"}`}
             title={`${
               islogging
                 ? "You don't have an account ?"
