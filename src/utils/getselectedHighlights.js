@@ -8,7 +8,7 @@ export default async (option) => {
     case FilterOptions.Private:
       return await apiGetRequest("highlights", { isPrivate: true });
     case FilterOptions.Favourite:
-      return await apiGetRequest("highlights", { isFavourite: true });
+      return await apiGetRequest("highlights", { isFavorite: true });
     default:
       return await apiGetRequest("highlights/all");
   }
