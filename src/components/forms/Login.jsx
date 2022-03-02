@@ -9,9 +9,11 @@ import {
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { apiPostRequest } from "../../utils/api/apiMethods";
+
+import Spinner from "../units/Spinner";
 
 import setAuthToken from "../../utils/api/setAuthToken";
+import { apiPostRequest } from "../../utils/api/apiMethods";
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -22,6 +24,7 @@ const loginSchema = Yup.object({
 
 const Login = ({ tokenSet, closeModal }) => {
   const [showPassword, showPasswordSet] = useState(false);
+  const [loading, loadingSet] = useState(null);
 
   const loginFormik = useFormik({
     initialValues: {
@@ -31,7 +34,11 @@ const Login = ({ tokenSet, closeModal }) => {
     validationSchema: loginSchema,
     onSubmit: async (values) => {
       const { email, password } = values;
+
+      loadingSet(true);
       const token = await apiPostRequest("auth/login", { email, password });
+      loadingSet(false);
+
       if (token) {
         setAuthToken(token);
         tokenSet(token);
@@ -127,10 +134,12 @@ const Login = ({ tokenSet, closeModal }) => {
           type="submit"
           className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
         >
-          <span className="mr-2">Sign In</span>
-          <span>
+          <p className="mr-2">Sign In</p>
+          {loading ? (
+            <Spinner size={6} />
+          ) : (
             <ArrowCircleRightIcon className="w-6 h-6" />
-          </span>
+          )}
         </button>
       </div>
     </form>

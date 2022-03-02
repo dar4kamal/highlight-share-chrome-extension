@@ -12,6 +12,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
+import Spinner from "../units/Spinner";
+
 import { apiPostRequest } from "../../utils/api/apiMethods";
 
 const registerSchema = Yup.object({
@@ -23,6 +25,7 @@ const registerSchema = Yup.object({
 });
 
 const Register = ({ closeModal }) => {
+  const [loading, loadingSet] = useState(null);
   const [showPassword, showPasswordSet] = useState(false);
 
   const registerFormik = useFormik({
@@ -34,11 +37,14 @@ const Register = ({ closeModal }) => {
     validationSchema: registerSchema,
     onSubmit: async (values) => {
       const { name, email, password } = values;
+
+      loadingSet(true);
       const registerStatus = await apiPostRequest("auth/register", {
         name,
         email,
         password,
       });
+      loadingSet(false);
 
       if (registerStatus) {
         toast.success(registerStatus);
@@ -169,10 +175,12 @@ const Register = ({ closeModal }) => {
           type="submit"
           className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
         >
-          <span className="mr-2">Sign Up</span>
-          <span>
+          <p className="mr-2">Sign Up</p>
+          {loading ? (
+            <Spinner size={6} />
+          ) : (
             <ArrowCircleRightIcon className="w-6 h-6" />
-          </span>
+          )}
         </button>
       </div>
     </form>
