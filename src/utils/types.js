@@ -23,3 +23,9 @@ export const FilterDisplayOptions = [
     value: FilterOptions.Favourite,
   },
 ];
+
+export const HighlightSrcType = Object.freeze({
+  Book: "Book",
+  Article: "Article",
+  Quote: "Quote",
+});
