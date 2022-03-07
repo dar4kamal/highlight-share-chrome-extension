@@ -26,16 +26,12 @@ const addHighlightSchema = Yup.object({
   content: Yup.string().required("Highlight Content is Required"),
 });
 
-const AddHighlight = ({ closeModal }) => {
+const AddHighlight = ({ closeModal, initialValues }) => {
   const [loading, loadingSet] = useState(null);
 
   const addHighlightFormik = useFormik({
-    initialValues: {
-      src: "",
-      srcType: HighlightSrcType.Book,
-      srcAuthor: "",
-      content: "",
-    },
+    initialValues,
+    enableReinitialize: true,
     validationSchema: addHighlightSchema,
     onSubmit: async (values) => {
       loadingSet(true);

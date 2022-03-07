@@ -14,7 +14,7 @@ import Modal from "../components/units/Modal";
 import AddHighlight from "../components/forms/AddHighlight";
 
 import { getItem, setItem } from "../utils/handleStorage";
-import { FilterDisplayOptions } from "../utils/types";
+import { FilterDisplayOptions, HighlightSrcType } from "../utils/types";
 
 toast.configure({
   autoClose: 2000,
@@ -51,7 +51,17 @@ const App = () => {
         title="Add New Highlight"
         showModal={showAddModal}
         closeModal={() => showAddModalSet(false)}
-        Body={() => <AddHighlight closeModal={() => showAddModalSet(false)} />}
+        Body={() => (
+          <AddHighlight
+            closeModal={() => showAddModalSet(false)}
+            initialValues={{
+              src: "",
+              srcType: HighlightSrcType.Book,
+              srcAuthor: "",
+              content: "",
+            }}
+          />
+        )}
       />
       <Header
         todayDate={todayDate}
