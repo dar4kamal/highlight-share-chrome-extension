@@ -47,6 +47,7 @@ const Header = ({ todayDate, currentOption, updateOption }) => {
     <>
       <Modal
         Body={() => <ProfileModal />}
+        // TODO: add modal to update profile, change password
         showModal={showProfileModal}
         closeModal={() => setShowProfileModal(false)}
       />
