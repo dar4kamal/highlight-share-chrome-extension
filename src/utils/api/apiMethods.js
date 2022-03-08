@@ -11,7 +11,7 @@ export const apiPostRequest = async (url, body) => {
 };
 
 export const apiPatchRequest = async (url, body) => {
-  return await ApiMethodWrapper(ApiClient.patch, [`/${url}`, body, { params }]);
+  return await ApiMethodWrapper(ApiClient.patch, [`/${url}`, body]);
 };
 
 export const apiDeleteRequest = async (url, params) => {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Login from "./forms/Login";
 import Register from "./forms/Register";
 
-import AuthOption from "./units/AuthOption";
+import MultiFormOption from "./units/MultiFormOption";
 
 const AuthModal = (props) => {
   const [islogging, isloggingSet] = useState(true);
@@ -15,7 +15,7 @@ const AuthModal = (props) => {
       </div>
       <div className="flex items-center justify-center mt-6">
         <div className="inline-flex items-center text-base font-medium text-center text-gray-700">
-          <AuthOption
+          <MultiFormOption
             actionText={`${islogging ? "Sign Up" : "Sign In"}`}
             title={`${
               islogging

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AuthOption = ({ updateOption, actionText, title }) => {
+const MultiFormOption = ({ updateOption, actionText, title }) => {
   return (
     <span className="ml-2 text-base">
       {title}
@@ -13,4 +13,4 @@ const AuthOption = ({ updateOption, actionText, title }) => {
     </span>
   );
 };
-export default AuthOption;
+export default MultiFormOption;
