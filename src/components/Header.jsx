@@ -46,10 +46,12 @@ const Header = ({ todayDate, currentOption, updateOption }) => {
   return (
     <>
       <Modal
-        Body={() => <ProfileModal />}
-        // TODO: add modal to update profile, change password
+        title="Settings"
         showModal={showProfileModal}
         closeModal={() => setShowProfileModal(false)}
+        Body={() => (
+          <ProfileModal closeModal={() => setShowProfileModal(false)} />
+        )}
       />
       <Modal
         Body={() => (
