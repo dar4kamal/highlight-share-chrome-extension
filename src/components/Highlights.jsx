@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Spinner from "./units/Spinner";
 import HighlightCard from "./units/HighlightCard";
+import Spinner, { SpinnerTypes } from "./units/Spinner";
 
 import { FilterOptions } from "../utils/types";
 import getselectedHighlights from "../utils/getselectedHighlights";
@@ -15,7 +15,7 @@ const Highlights = ({ currentOption }) => {
     setLoading(false);
   }, [currentOption]);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner type={SpinnerTypes.LARGE} />;
   if (!loading && !highlights)
     return <div>Sorry, There was a server problems or you should login</div>;
 

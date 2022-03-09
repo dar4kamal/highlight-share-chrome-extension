@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { defaultGetRequest } from "../../utils/axiosMethods";
 
-import Spinner from "./Spinner";
+import Spinner, { SpinnerTypes } from "./Spinner";
 
 const QuoteCard = () => {
   const [loading, loadingSet] = useState(null);
@@ -16,7 +16,7 @@ const QuoteCard = () => {
     dailyQuoteSet(quoteList[0]);
   }, []);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner type={SpinnerTypes.LARGE} />;
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-5">

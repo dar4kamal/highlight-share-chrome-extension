@@ -11,8 +11,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
-import Spinner from "../units/Spinner";
 import SelectInput from "../units/SelectInput";
+import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import { HighlightSrcType } from "../../utils/types";
 import { apiPostRequest } from "../../utils/api/apiMethods";
@@ -196,7 +196,7 @@ const AddHighlight = ({ closeModal, initialValues }) => {
         >
           <p className="mr-2">Add</p>
           {loading ? (
-            <Spinner size={6} />
+            <Spinner type={SpinnerTypes.SMALL} />
           ) : (
             <ArrowCircleRightIcon className="w-6 h-6" />
           )}

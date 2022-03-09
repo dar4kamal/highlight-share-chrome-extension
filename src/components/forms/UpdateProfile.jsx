@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
-import Spinner from "../units/Spinner";
+import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import { getItem } from "../../utils/handleStorage";
 import { apiPatchRequest } from "../../utils/api/apiMethods";
@@ -128,7 +128,7 @@ const UpdateProfile = ({ closeModal }) => {
         >
           <p className="mr-2">Update</p>
           {loading ? (
-            <Spinner size={6} />
+            <Spinner type={SpinnerTypes.SMALL} />
           ) : (
             <ArrowCircleRightIcon className="w-6 h-6" />
           )}

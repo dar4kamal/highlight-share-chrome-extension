@@ -10,7 +10,7 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import Spinner from "../units/Spinner";
+import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import setAuthToken from "../../utils/api/setAuthToken";
 import { apiPostRequest } from "../../utils/api/apiMethods";
@@ -136,7 +136,7 @@ const Login = ({ tokenSet, closeModal }) => {
         >
           <p className="mr-2">Sign In</p>
           {loading ? (
-            <Spinner size={6} />
+            <Spinner type={SpinnerTypes.SMALL} />
           ) : (
             <ArrowCircleRightIcon className="w-6 h-6" />
           )}
