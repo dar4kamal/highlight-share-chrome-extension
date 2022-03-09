@@ -16,7 +16,7 @@ import UpdateHighlight from "../forms/UpdateHighlight";
 import { getItem } from "../../utils/handleStorage";
 import { apiPatchRequest } from "../../utils/api/apiMethods";
 
-const HighlightCard = ({ highlight }) => {
+const HighlightCard = ({ onAction, onActionSet, highlight }) => {
   const {
     id,
     src,
@@ -55,7 +55,10 @@ const HighlightCard = ({ highlight }) => {
           <UpdateHighlight
             highlightId={id}
             details={{ src, srcType, srcAuthor, content }}
-            closeModal={() => showUpdateModalSet(false)}
+            closeModal={() => {
+              showUpdateModalSet(false);
+              onActionSet(!onAction);
+            }}
           />
         )}
       />
@@ -87,6 +90,7 @@ const HighlightCard = ({ highlight }) => {
                       {}
                     );
                     loadingSet(false);
+                    onActionSet(!onAction);
 
                     privacySet(!privacy);
                     toast.success(updateStatus);
@@ -105,6 +109,7 @@ const HighlightCard = ({ highlight }) => {
                       {}
                     );
                     loadingSet(false);
+                    onActionSet(!onAction);
 
                     favouriteSet(!favourite);
                     toast.success(updateStatus);

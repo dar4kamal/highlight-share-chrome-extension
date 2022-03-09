@@ -8,12 +8,13 @@ import getselectedHighlights from "../utils/getselectedHighlights";
 
 const Highlights = ({ currentOption }) => {
   const [loading, setLoading] = useState(true);
+  const [onAction, onActionSet] = useState(false);
   const [highlights, highlightsSet] = useState(null);
 
   useEffect(async () => {
     highlightsSet(await getselectedHighlights(currentOption));
     setLoading(false);
-  }, [currentOption]);
+  }, [currentOption, onAction]);
 
   if (loading) return <Spinner type={SpinnerTypes.LARGE} />;
   if (!loading && !highlights)
@@ -43,7 +44,12 @@ const Highlights = ({ currentOption }) => {
         <p className="text-center lg:hidden">Highlights</p>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
           {highlights.map((item) => (
-            <HighlightCard highlight={item} key={item.content} />
+            <HighlightCard
+              highlight={item}
+              key={item.content}
+              onAction={onAction}
+              onActionSet={onActionSet}
+            />
           ))}
         </div>
       </div>
