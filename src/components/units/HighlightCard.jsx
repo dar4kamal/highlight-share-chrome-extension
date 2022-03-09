@@ -79,7 +79,6 @@ const HighlightCard = ({ highlight }) => {
             isBelongsToUser && (
               <div className="flex">
                 <IconWrapper
-                  title="Change Privacy"
                   className="action-icon"
                   onAction={async () => {
                     loadingSet(true);
@@ -93,10 +92,11 @@ const HighlightCard = ({ highlight }) => {
                     toast.success(updateStatus);
                   }}
                   Icon={privacy ? LockClosedIcon : GlobeIcon}
+                  title={privacy ? "Set Public" : "Set Private"}
                 />
                 <IconWrapper
                   Icon={StarIcon}
-                  title="Favorite/Un Favorite"
+                  title={favourite ? "UnFavorite" : "Favorite"}
                   className={`action-icon ${favourite && "fill-yellow-500"}`}
                   onAction={async () => {
                     loadingSet(true);
