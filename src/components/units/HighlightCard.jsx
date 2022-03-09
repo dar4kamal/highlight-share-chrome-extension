@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   StarIcon,
   GlobeIcon,
-  DotsVerticalIcon,
   LockClosedIcon,
+  DotsVerticalIcon,
 } from "@heroicons/react/outline";
 
+import Modal from "./Modal";
 import IconWrapper from "./IconWrapper";
+import UpdateHighlight from "../forms/UpdateHighlight";
+
+import { getItem } from "../../utils/handleStorage";
 
 const HighlightCard = ({ highlight }) => {
   const {
@@ -24,18 +28,39 @@ const HighlightCard = ({ highlight }) => {
     likesCount,
   } = highlight;
 
+  const [currentUser, currentUserSet] = useState(null);
+  const [showUpdateModal, showUpdateModalSet] = useState(null);
+
+  useEffect(() => {
+    const fetchContent = async () => currentUserSet(await getItem("userInfo"));
+    fetchContent();
+  }, []);
+
+  const isBelongsToUser = user?.email === currentUser?.email;
+
   const [privacy, privacySet] = useState(isPrivate);
   const [favourite, favouriteSet] = useState(isFavorite);
 
   return (
     <blockquote className="relative flex col-span-2 p-5 border-2 border-red-600">
-      <DotsVerticalIcon
-        className="absolute action-icon top-3 right-3"
-        onClick={() => {
-          // TODO: add options to update/ delete highlight
-          alert("options");
-        }}
+      <Modal
+        title="Update Highlight"
+        showModal={showUpdateModal}
+        closeModal={() => showUpdateModalSet(false)}
+        Body={() => (
+          <UpdateHighlight
+            highlightId={id}
+            details={{ src, srcType, srcAuthor, content }}
+            closeModal={() => showUpdateModalSet(false)}
+          />
+        )}
       />
+      {isBelongsToUser && (
+        <DotsVerticalIcon
+          className="absolute action-icon top-3 right-3"
+          onClick={() => showUpdateModalSet(true)}
+        />
+      )}
       <div className="grid w-full gap-2">
         {/* // TODO: add Other highlight stuff (user,createdAt,updatedAt,likesCount) */}
         <p className="pr-5">{content}</p>

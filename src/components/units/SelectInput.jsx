@@ -1,10 +1,15 @@
 import React from "react";
 
-const SelectInput = ({ options, setSelectedOption, title }) => {
+const SelectInput = ({
+  title,
+  options,
+  setSelectedOption,
+  selectedOption = title,
+}) => {
   return (
     <div className="relative flex-auto mr-2 group">
       <select
-        defaultValue={title}
+        defaultValue={selectedOption}
         onChange={({ target: { value } }) => setSelectedOption(value)}
         className="w-full py-2 pl-2 text-sm font-medium text-gray-700 bg-white rounded-md shadow-sm hover:bg-gray-100 focus:outline-none"
       >
