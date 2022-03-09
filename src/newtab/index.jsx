@@ -78,7 +78,7 @@ const App = () => {
       >
         <PlusIcon className="w-8 h-8 lg:h-10 lg:w-10" />
       </div>
-      <ToastContainer />
+      <ToastContainer bodyClassName="text-lg" />
     </div>
   );
 };

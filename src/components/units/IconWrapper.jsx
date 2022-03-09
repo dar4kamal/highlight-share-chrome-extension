@@ -1,7 +1,11 @@
 import React from "react";
 
-const IconWrapper = ({ Icon, className, onAction }) => {
-  return <Icon className={className} onClick={onAction} />;
+const IconWrapper = ({ title, Icon, className, onAction }) => {
+  return (
+    <div title={title}>
+      <Icon className={className} onClick={onAction} />
+    </div>
+  );
 };
 
 export default IconWrapper;

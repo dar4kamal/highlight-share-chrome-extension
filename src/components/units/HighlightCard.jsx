@@ -6,12 +6,15 @@ import {
   LockClosedIcon,
   DotsVerticalIcon,
 } from "@heroicons/react/outline";
+import { toast } from "react-toastify";
 
 import Modal from "./Modal";
 import IconWrapper from "./IconWrapper";
+import Spinner, { SpinnerTypes } from "./Spinner";
 import UpdateHighlight from "../forms/UpdateHighlight";
 
 import { getItem } from "../../utils/handleStorage";
+import { apiPatchRequest } from "../../utils/api/apiMethods";
 
 const HighlightCard = ({ highlight }) => {
   const {
@@ -38,6 +41,7 @@ const HighlightCard = ({ highlight }) => {
 
   const isBelongsToUser = user?.email === currentUser?.email;
 
+  const [loading, loadingSet] = useState(false);
   const [privacy, privacySet] = useState(isPrivate);
   const [favourite, favouriteSet] = useState(isFavorite);
 
@@ -69,20 +73,46 @@ const HighlightCard = ({ highlight }) => {
             <p className="">{`― ${srcAuthor}`}</p>
             <p className="">{src}</p>
           </div>
-          <div className="flex">
-            <IconWrapper
-              className="action-icon"
-              onAction={() => privacySet(!privacy)}
-              Icon={privacy ? LockClosedIcon : GlobeIcon}
-              // TODO: updated through API
-            />
-            <IconWrapper
-              Icon={StarIcon}
-              className={`action-icon ${favourite && "fill-yellow-500"}`}
-              onAction={() => favouriteSet(!favourite)}
-              // TODO: updated through API
-            />
-          </div>
+          {loading ? (
+            <Spinner type={SpinnerTypes.SMALL} />
+          ) : (
+            isBelongsToUser && (
+              <div className="flex">
+                <IconWrapper
+                  title="Change Privacy"
+                  className="action-icon"
+                  onAction={async () => {
+                    loadingSet(true);
+                    const updateStatus = await apiPatchRequest(
+                      `highlights/privacy/${id}`,
+                      {}
+                    );
+                    loadingSet(false);
+
+                    privacySet(!privacy);
+                    toast.success(updateStatus);
+                  }}
+                  Icon={privacy ? LockClosedIcon : GlobeIcon}
+                />
+                <IconWrapper
+                  Icon={StarIcon}
+                  title="Favorite/Un Favorite"
+                  className={`action-icon ${favourite && "fill-yellow-500"}`}
+                  onAction={async () => {
+                    loadingSet(true);
+                    const updateStatus = await apiPatchRequest(
+                      `highlights/fav/${id}`,
+                      {}
+                    );
+                    loadingSet(false);
+
+                    favouriteSet(!favourite);
+                    toast.success(updateStatus);
+                  }}
+                />
+              </div>
+            )
+          )}
         </div>
       </div>
     </blockquote>
