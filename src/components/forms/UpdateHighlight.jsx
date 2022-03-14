@@ -78,33 +78,32 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
     <form onSubmit={updateProfileFormik.handleSubmit} className="space-y-5">
       {/* Source */}
       <div className="flex flex-col">
-        <label
-          htmlFor="src"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="src" className="form-label">
           Source
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            updateProfileFormik.errors.src ? "border-red-500" : ""
+          className={`form-input-container ${
+            updateProfileFormik.errors.src
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <AnnotationIcon className="w-6 h-6 text-blue-500" />
+          <div className="w-10 h-full pl-2">
+            <AnnotationIcon className="form-input-icon" />
           </div>
           <input
             id="src"
             name="src"
             type="text"
+            className="form-input"
             placeholder="Enter highlight's source"
             onBlur={updateProfileFormik.handleBlur}
             value={updateProfileFormik.values.src}
             onChange={updateProfileFormik.handleChange}
-            className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
           />
         </div>
         {updateProfileFormik.errors.src && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {updateProfileFormik.errors.src}
           </p>
         )}
@@ -112,19 +111,18 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
 
       {/* Source Type */}
       <div className="flex flex-col">
-        <label
-          htmlFor="srcType"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="srcType" className="form-label">
           Source Type
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            updateProfileFormik.errors.srcType ? "border-red-500" : ""
+          className={`form-input-container ${
+            updateProfileFormik.errors.srcType
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <CollectionIcon className="w-6 h-6 text-blue-500" />
+          <div className="w-10 h-full pl-2">
+            <CollectionIcon className="form-input-icon" />
           </div>
 
           <SelectInput
@@ -137,7 +135,7 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
           />
         </div>
         {updateProfileFormik.errors.srcType && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {updateProfileFormik.errors.srcType}
           </p>
         )}
@@ -145,35 +143,34 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
 
       {/* Source Author */}
       <div className="flex flex-col">
-        <label
-          htmlFor="srcAuthor"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="srcAuthor" className="form-label">
           Author
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            updateProfileFormik.errors.srcAuthor ? "border-red-500" : ""
+          className={`form-input-container ${
+            updateProfileFormik.errors.srcAuthor
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <IdentificationIcon className="w-6 h-6 text-blue-500" />
+          <div className="w-10 h-full pl-2">
+            <IdentificationIcon className="form-input-icon" />
           </div>
           <input
             type="text"
             id="srcAuthor"
             name="srcAuthor"
+            className="form-input"
             placeholder="Enter Highlight Author"
             onBlur={updateProfileFormik.handleBlur}
             value={updateProfileFormik.values.srcAuthor}
             onChange={({ target: { value } }) =>
               updateProfileFormik.setFieldValue("srcAuthor", value)
             }
-            className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
           />
         </div>
         {updateProfileFormik.errors.srcAuthor && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {updateProfileFormik.errors.srcAuthor}
           </p>
         )}
@@ -181,19 +178,18 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
 
       {/* Content */}
       <div className="flex flex-col">
-        <label
-          htmlFor="content"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="content" className="form-label">
           Content
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            updateProfileFormik.errors.content ? "border-red-500" : ""
+          className={`form-input-container ${
+            updateProfileFormik.errors.content
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <BookOpenIcon className="w-6 h-6 text-blue-500" />
+          <div className="w-10 h-full pl-2">
+            <BookOpenIcon className="form-input-icon" />
           </div>
           <textarea
             cols="50"
@@ -206,21 +202,17 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
             onChange={({ target: { value } }) =>
               updateProfileFormik.setFieldValue("content", value)
             }
-            class="mr-2 w-full resize-none appearance-none rounded bg-transparent py-2 px-4 leading-relaxed tracking-wide placeholder-gray-500 focus:border-blue-400 focus:bg-white focus:outline-none"
           />
         </div>
         {updateProfileFormik.errors.content && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {updateProfileFormik.errors.content}
           </p>
         )}
       </div>
 
       <div className="flex w-full">
-        <button
-          type="submit"
-          className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
-        >
+        <button type="submit" className="form-button">
           <p className="mr-2">Update</p>
           {loading ? (
             <Spinner type={SpinnerTypes.SMALL} />

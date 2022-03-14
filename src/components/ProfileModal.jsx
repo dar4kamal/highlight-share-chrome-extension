@@ -10,7 +10,7 @@ const ProfileModal = (props) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col py-5 border-b border-solid">
+      <div className="flex flex-col py-5 border-b border-solid border-primary dark:border-secondary">
         {isToUpdateProfile ? (
           <UpdateProfile {...props} />
         ) : (
@@ -18,7 +18,7 @@ const ProfileModal = (props) => {
         )}
       </div>
       <div className="flex items-center justify-center mt-6">
-        <div className="inline-flex items-center text-base font-medium text-center text-gray-700">
+        <div className="inline-flex items-center">
           <MultiFormOption
             actionText={
               isToUpdateProfile ? "Change Password" : "Update Profile"

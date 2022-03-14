@@ -20,8 +20,8 @@ const QuoteCard = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-5">
-      <p className="">Quote of The Day</p>
-      <div className="grid gap-2 p-5 border-2 border-red-600">
+      <p className="text-primary dark:text-secondary">Quote of The Day</p>
+      <div className="grid gap-2 p-5 bg-white rounded-xl text-primary dark:bg-secondary">
         {!dailyQuote ? (
           <p className="pr-5">Oops !! A problem has occurred </p>
         ) : (

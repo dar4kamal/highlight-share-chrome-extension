@@ -23,15 +23,31 @@ toast.configure({
 });
 
 const App = () => {
+  const [user, userSet] = useState(null);
   const [todayDate, todayDateSet] = useState("");
   const [currentOption, currentOptionSet] = useState(null);
   const [showAddModal, showAddModalSet] = useState(null);
+  const [isDarkModeEnabled, isDarkModeEnabledSet] = useState(null);
 
   const updateOption = (option) => {
     setItem("currentOption", option);
     currentOptionSet(option);
   };
 
+  // Dark Mode Settings
+  useEffect(async () => {
+    const darkMode = await getItem("darkMode");
+    isDarkModeEnabledSet(darkMode);
+  }, []);
+
+  useEffect(async () => {
+    !isDarkModeEnabled
+      ? document.documentElement.classList.remove("dark")
+      : document.documentElement.classList.add("dark");
+    setItem("darkMode", isDarkModeEnabled);
+  }, [isDarkModeEnabled]);
+
+  // Date
   useEffect(async () => {
     todayDateSet(
       new Date().toLocaleDateString("en-us", {
@@ -40,6 +56,10 @@ const App = () => {
         day: "numeric",
       })
     );
+  }, []);
+
+  // Select Options
+  useEffect(async () => {
     const savedOption = await getItem("currentOption");
     if (!savedOption) setItem("currentOption", FilterDisplayOptions[0]);
     else currentOptionSet(savedOption);
@@ -64,19 +84,24 @@ const App = () => {
         )}
       />
       <Header
+        currentUser={user}
+        currentUserSet={userSet}
         todayDate={todayDate}
         updateOption={updateOption}
         currentOption={currentOption}
+        darkMode={isDarkModeEnabled}
+        darkModeSet={isDarkModeEnabledSet}
+        currentOptionSet={currentOptionSet}
       />
-      <div className="flex-auto bg-blue-300">
-        <Main currentOption={currentOption} />
+      <div className="flex-auto bg-secondary dark:bg-primary">
+        <Main currentUser={user} currentOption={currentOption} />
       </div>
       <Footer />
       <div
         onClick={() => showAddModalSet(true)}
-        className="absolute z-50 p-3 text-white bg-blue-700 rounded-full cursor-pointer top-20 left-10 hover:bg-white hover:text-blue-700 lg:top-auto lg:bottom-20 lg:p-4"
+        className="fixed z-40 p-3 text-white rounded-full cursor-pointer right-10 bottom-36 bg-action-dark hover:bg-white hover:text-action-dark md:bottom-20 md:p-4 lg:mb-5 xs:bottom-16"
       >
-        <PlusIcon className="w-8 h-8 lg:h-10 lg:w-10" />
+        <PlusIcon className="w-6 h-6 sm:h-8 sm:w-8 md:h-10 md:w-10" />
       </div>
       <ToastContainer bodyClassName="text-lg" />
     </div>

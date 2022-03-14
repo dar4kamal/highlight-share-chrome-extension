@@ -57,129 +57,123 @@ const Register = ({ closeModal }) => {
   return (
     <form onSubmit={registerFormik.handleSubmit} className="space-y-5">
       <div className="flex flex-col">
-        <label
-          htmlFor="name"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="name" className="form-label">
           Name
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            registerFormik.errors.name ? "border-red-500" : ""
+          className={`form-input-container ${
+            registerFormik.errors.name
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <UserCircleIcon className="w-6 h-6 text-blue-500" />
+          <div className="h-full w-10 pl-2">
+            <UserCircleIcon className="form-input-icon" />
           </div>
           <input
             required
             id="name"
             type="name"
             name="name"
+            className="form-input"
             placeholder="Enter your name"
             onBlur={registerFormik.handleBlur}
             value={registerFormik.values.name}
             onChange={registerFormik.handleChange}
-            className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
           />
         </div>
         {registerFormik.errors.name && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {registerFormik.errors.name}
           </p>
         )}
       </div>
 
       <div className="flex flex-col">
-        <label
-          htmlFor="email"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="email" className="form-label">
           Email Address
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            registerFormik.errors.email ? "border-red-500" : ""
+          className={`form-input-container ${
+            registerFormik.errors.email
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <AtSymbolIcon className="w-6 h-6 text-blue-500" />
+          <div className="h-full w-10 pl-2">
+            <AtSymbolIcon className="form-input-icon" />
           </div>
           <input
             required
             id="email"
             type="email"
             name="email"
+            className="form-input"
             placeholder="Enter your email"
             onBlur={registerFormik.handleBlur}
             value={registerFormik.values.email}
             onChange={registerFormik.handleChange}
-            className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
           />
         </div>
         {registerFormik.errors.email && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {registerFormik.errors.email}
           </p>
         )}
       </div>
 
       <div className="flex flex-col">
-        <label
-          htmlFor="password"
-          className="mb-1 text-sm tracking-wide text-gray-600"
-        >
+        <label htmlFor="password" className="form-label">
           Password
         </label>
         <div
-          className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-            registerFormik.errors.password ? "border-red-500" : ""
+          className={`form-input-container ${
+            registerFormik.errors.password
+              ? "border-error-dark dark:border-error-dark"
+              : ""
           }`}
         >
-          <div className="w-10 h-full pl-2 text-gray-400">
-            <LockClosedIcon className="w-6 h-6 text-blue-500" />
+          <div className="h-full w-10 pl-2">
+            <LockClosedIcon className="form-input-icon" />
           </div>
           <input
             required
             id="password"
             name="password"
-            onBlur={registerFormik.handleBlur}
+            className="form-input"
             placeholder="Enter your password"
+            onBlur={registerFormik.handleBlur}
             value={registerFormik.values.password}
             type={showPassword ? "text" : "password"}
             onChange={({ target: { value } }) =>
               registerFormik.setFieldValue("password", value)
             }
-            className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
           />
           <div
             onClick={() => showPasswordSet(!showPassword)}
-            className="w-10 h-full pl-2 text-blue-500 cursor-pointer hover:text-blue-800"
+            className="h-full w-10 cursor-pointer pl-2"
           >
             {showPassword ? (
-              <EyeOffIcon className="w-6 h-6" />
+              <EyeOffIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
             ) : (
-              <EyeIcon className="w-6 h-6" />
+              <EyeIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
             )}
           </div>
         </div>
         {registerFormik.errors.password && (
-          <p className="pt-2 pl-2 text-sm text-red-500">
+          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
             {registerFormik.errors.password}
           </p>
         )}
       </div>
 
       <div className="flex w-full">
-        <button
-          type="submit"
-          className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
-        >
+        <button type="submit" className="form-button">
           <p className="mr-2">Sign Up</p>
           {loading ? (
             <Spinner type={SpinnerTypes.SMALL} />
           ) : (
-            <ArrowCircleRightIcon className="w-6 h-6" />
+            <ArrowCircleRightIcon className="h-6 w-6" />
           )}
         </button>
       </div>

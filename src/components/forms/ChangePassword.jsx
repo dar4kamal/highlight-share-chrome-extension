@@ -77,24 +77,24 @@ const ChangePassword = ({ closeModal }) => {
 
         return (
           <div key={key} className="flex flex-col">
-            <label
-              htmlFor={key}
-              className="mb-1 text-sm tracking-wide text-gray-600"
-            >
+            <label htmlFor={key} className="form-label">
               {`${key.split("Password").join("")} Password`}
             </label>
             <div
-              className={`flex items-center justify-start rounded-2xl border-2 border-gray-400 text-sm ${
-                changePasswordFormik.errors[key] ? "border-red-500" : ""
+              className={`form-input-container ${
+                changePasswordFormik.errors[key]
+                  ? "border-error-dark dark:border-error-dark"
+                  : ""
               }`}
             >
-              <div className="w-10 h-full pl-2 text-gray-400">
-                <LockClosedIcon className="w-6 h-6 text-blue-500" />
+              <div className="h-full w-10 pl-2">
+                <LockClosedIcon className="form-input-icon" />
               </div>
               <input
                 required
                 id={key}
                 name={key}
+                className="form-input"
                 type={showValue ? "text" : "password"}
                 value={changePasswordFormik.values[key]}
                 onBlur={changePasswordFormik.handleBlur}
@@ -102,21 +102,20 @@ const ChangePassword = ({ closeModal }) => {
                   changePasswordFormik.setFieldValue(key, value)
                 }
                 placeholder={`Enter ${key.split("Password").join("")} Password`}
-                className="py-2 mr-2 placeholder-gray-500 bg-transparent focus:border-blue-400 focus:outline-none"
               />
               <div
                 onClick={() => action(!showValue)}
-                className="w-10 h-full pl-2 text-blue-500 cursor-pointer hover:text-blue-800"
+                className="h-full w-10 cursor-pointer pl-2"
               >
                 {showValue ? (
-                  <EyeOffIcon className="w-6 h-6" />
+                  <EyeOffIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
                 ) : (
-                  <EyeIcon className="w-6 h-6" />
+                  <EyeIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
                 )}
               </div>
             </div>
             {changePasswordFormik.errors[key] && (
-              <p className="pt-2 pl-2 text-sm text-red-500">
+              <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
                 {changePasswordFormik.errors[key]}
               </p>
             )}
@@ -125,15 +124,12 @@ const ChangePassword = ({ closeModal }) => {
       })}
 
       <div className="flex w-full">
-        <button
-          type="submit"
-          className="flex items-center justify-center w-full py-2 mt-2 text-sm text-white transition duration-150 ease-in bg-blue-500 rounded-2xl hover:bg-blue-600 focus:outline-none sm:text-base"
-        >
+        <button type="submit" className="form-button">
           <p className="mr-2">Update</p>
           {loading ? (
             <Spinner type={SpinnerTypes.SMALL} />
           ) : (
-            <ArrowCircleRightIcon className="w-6 h-6" />
+            <ArrowCircleRightIcon className="h-6 w-6" />
           )}
         </button>
       </div>

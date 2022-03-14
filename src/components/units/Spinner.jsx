@@ -22,7 +22,7 @@ const Spinner = ({ type = SpinnerTypes.MEDIUM }) => {
   return (
     <div className="flex justify-center">
       <div
-        className={`${size} animate-spin rounded-full border-4 border-white border-b-transparent`}
+        className={`${size} animate-spin rounded-full border-4 border-primary border-b-transparent dark:border-secondary dark:border-b-transparent`}
       />
     </div>
   );
