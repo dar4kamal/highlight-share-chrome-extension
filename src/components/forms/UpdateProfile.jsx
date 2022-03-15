@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
+import FormItem from "../units/FormItem";
 import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import { getItem } from "../../utils/handleStorage";
@@ -31,8 +32,8 @@ const UpdateProfile = ({ closeModal }) => {
   const updateProfileFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: user?.email,
-      name: user?.name,
+      email: user?.email ?? "",
+      name: user?.name ?? "",
     },
     validationSchema: profileSchema,
     onSubmit: async (values) => {
@@ -54,70 +55,36 @@ const UpdateProfile = ({ closeModal }) => {
   return (
     <form onSubmit={updateProfileFormik.handleSubmit} className="space-y-5">
       {/* Name Section  */}
-      <div className="flex flex-col">
-        <label htmlFor="name" className="form-label">
-          Name
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.name
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="h-full w-10 pl-2">
-            <UserCircleIcon className="form-input-icon" />
-          </div>
-          <input
-            id="name"
-            type="name"
-            name="name"
-            className="form-input"
-            placeholder="Enter your name"
-            onBlur={updateProfileFormik.handleBlur}
-            value={updateProfileFormik.values.name}
-            onChange={updateProfileFormik.handleChange}
-          />
-        </div>
-        {updateProfileFormik.errors.name && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.name}
-          </p>
-        )}
-      </div>
+      <FormItem
+        required
+        type="text"
+        name="name"
+        label="Name"
+        SideIcon={UserCircleIcon}
+        placeholder="Enter your name"
+        errorValue={updateProfileFormik.errors.name}
+        inputValue={updateProfileFormik.values.name}
+        onBlurAction={updateProfileFormik.handleBlur}
+        onChangeAction={({ target: { value } }) =>
+          updateProfileFormik.setFieldValue("name", value)
+        }
+      />
 
       {/* Email Section  */}
-      <div className="flex flex-col">
-        <label htmlFor="email" className="form-label">
-          Email Address
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.email
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="h-full w-10 pl-2">
-            <AtSymbolIcon className="form-input-icon" />
-          </div>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className="form-input"
-            placeholder="Enter your email"
-            onBlur={updateProfileFormik.handleBlur}
-            value={updateProfileFormik.values.email}
-            onChange={updateProfileFormik.handleChange}
-          />
-        </div>
-        {updateProfileFormik.errors.email && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.email}
-          </p>
-        )}
-      </div>
+      <FormItem
+        required
+        type="email"
+        name="email"
+        label="Email Address"
+        SideIcon={AtSymbolIcon}
+        placeholder="Enter your email"
+        errorValue={updateProfileFormik.errors.email}
+        inputValue={updateProfileFormik.values.email}
+        onBlurAction={updateProfileFormik.handleBlur}
+        onChangeAction={({ target: { value } }) =>
+          updateProfileFormik.setFieldValue("email", value)
+        }
+      />
 
       <div className="flex w-full">
         <button type="submit" className="form-button">

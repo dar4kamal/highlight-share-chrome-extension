@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  EyeIcon,
-  EyeOffIcon,
   AtSymbolIcon,
   LockClosedIcon,
   ArrowCircleRightIcon,
@@ -10,6 +8,8 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
+import FormItem from "../units/FormItem";
+import TogglePassword from "../units/TogglePassword";
 import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import setAuthToken from "../../utils/api/setAuthToken";
@@ -49,83 +49,44 @@ const Login = ({ tokenSet, closeModal }) => {
 
   return (
     <form onSubmit={loginFormik.handleSubmit} className="space-y-5">
-      <div className="flex flex-col">
-        <label htmlFor="email" className="form-label">
-          Email Address
-        </label>
-        <div
-          className={`form-input-container ${
-            loginFormik.errors.email
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="h-full w-10 pl-2">
-            <AtSymbolIcon className="form-input-icon" />
-          </div>
-          <input
-            required
-            id="email"
-            type="email"
-            name="email"
-            className="form-input"
-            placeholder="Enter your email"
-            onBlur={loginFormik.handleBlur}
-            value={loginFormik.values.email}
-            onChange={loginFormik.handleChange}
-          />
-        </div>
-        {loginFormik.errors.email && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {loginFormik.errors.email}
-          </p>
-        )}
-      </div>
+      {/* Email */}
+      <FormItem
+        required
+        type="email"
+        name="email"
+        label="Email Address"
+        SideIcon={AtSymbolIcon}
+        placeholder="Enter your email"
+        errorValue={loginFormik.errors.email}
+        inputValue={loginFormik.values.email}
+        onBlurAction={loginFormik.handleBlur}
+        onChangeAction={({ target: { value } }) =>
+          loginFormik.setFieldValue("email", value)
+        }
+      />
 
-      <div className="flex flex-col">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <div
-          className={`form-input-container ${
-            loginFormik.errors.password
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="h-full w-10 pl-2">
-            <LockClosedIcon className="form-input-icon" />
-          </div>
-          <input
-            required
-            id="password"
-            name="password"
-            className="form-input"
-            onBlur={loginFormik.handleBlur}
-            placeholder="Enter your password"
-            value={loginFormik.values.password}
-            type={showPassword ? "text" : "password"}
-            onChange={({ target: { value } }) =>
-              loginFormik.setFieldValue("password", value)
-            }
+      {/* Password */}
+      <FormItem
+        required
+        name="password"
+        label="Password"
+        SideIcon={LockClosedIcon}
+        placeholder="Enter your password"
+        onBlurAction={loginFormik.handleBlur}
+        errorValue={loginFormik.errors.password}
+        inputValue={loginFormik.values.password}
+        type={showPassword ? "text" : "password"}
+        onChangeAction={({ target: { value } }) =>
+          loginFormik.setFieldValue("password", value)
+        }
+        isPasswordInput={true}
+        TogglePassword={
+          <TogglePassword
+            showPassword={showPassword}
+            showPasswordSet={showPasswordSet}
           />
-          <div
-            onClick={() => showPasswordSet(!showPassword)}
-            className="h-full w-10 cursor-pointer pl-2"
-          >
-            {showPassword ? (
-              <EyeOffIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
-            ) : (
-              <EyeIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
-            )}
-          </div>
-        </div>
-        {loginFormik.errors.password && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {loginFormik.errors.password}
-          </p>
-        )}
-      </div>
+        }
+      />
 
       <div className="flex w-full">
         <button type="submit" className="form-button">

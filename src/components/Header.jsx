@@ -9,12 +9,15 @@ import {
   AdjustmentsIcon,
 } from "@heroicons/react/outline";
 
-import AuthModal from "./AuthModal";
-import ProfileModal from "./ProfileModal";
-
 import Modal from "./units/Modal";
+import MultiForm from "./units/MultiForm";
 import FilterMenu from "./units/FilterMenu";
 import IconWrapper from "./units/IconWrapper";
+
+import Login from "./forms/Login";
+import Register from "./forms/Register";
+import UpdateProfile from "./forms/UpdateProfile";
+import ChangePassword from "./forms/ChangePassword";
 
 import setAuthToken from "../utils/api/setAuthToken";
 import { FilterDisplayOptions } from "../utils/types";
@@ -61,14 +64,26 @@ const Header = ({
         showModal={showProfileModal}
         closeModal={() => setShowProfileModal(false)}
         Body={() => (
-          <ProfileModal closeModal={() => setShowProfileModal(false)} />
+          <MultiForm
+            tokenSet={tokenSet}
+            titleOptions={new Array(2).fill("Wanna")}
+            formOptions={[UpdateProfile, ChangePassword]}
+            closeModal={() => setShowProfileModal(false)}
+            actionTextOptions={["Change Password", "Update Profile"]}
+          />
         )}
       />
       <Modal
         title="Welcome"
         Body={() => (
-          <AuthModal
+          <MultiForm
+            titleOptions={[
+              "You don't have an account ?",
+              "Already have an account ?",
+            ]}
             tokenSet={tokenSet}
+            formOptions={[Login, Register]}
+            actionTextOptions={["Sign Up", "Sign In"]}
             closeModal={() => setShowAuthModal(false)}
           />
         )}
@@ -81,7 +96,7 @@ const Header = ({
         } flex-wrap items-center justify-between bg-secondary text-xl text-primary shadow-md dark:bg-primary dark:text-secondary
         dark:shadow-sm dark:shadow-secondary sm:flex-row sm:justify-between xs:flex-row`}
       >
-        <div className="flex items-center justify-between order-1 gap-5 my-5 ml-5 place-self-start sm:order-none">
+        <div className="order-1 my-5 ml-5 flex items-center justify-between gap-5 place-self-start sm:order-none">
           <IconWrapper
             title=""
             className="action-icon"
@@ -103,12 +118,12 @@ const Header = ({
           />
         </div>
         {token && currentUser ? (
-          <div className="flex order-2 gap-1 mx-5 my-5 place-self-end sm:order-none">
+          <div className="order-2 mx-5 my-5 flex gap-1 place-self-end sm:order-none">
             <p>{currentUser?.name}</p>
             <div title="Profile Setting">
               <CogIcon
-                onClick={() => setShowProfileModal(true)}
                 className="action-icon"
+                onClick={() => setShowProfileModal(true)}
               />
             </div>
             <div title="Logout">
@@ -116,7 +131,7 @@ const Header = ({
             </div>
           </div>
         ) : (
-          <div className="order-2 py-5 mx-5 place-self-end sm:order-none">
+          <div className="order-2 mx-5 place-self-end py-5 sm:order-none">
             <FingerPrintIcon
               className="action-icon"
               onClick={() => setShowAuthModal(true)}

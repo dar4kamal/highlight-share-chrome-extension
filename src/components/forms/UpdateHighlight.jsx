@@ -11,6 +11,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
+import FormItem from "../units/FormItem";
 import SelectInput from "../units/SelectInput";
 import Spinner, { SpinnerTypes } from "../units/Spinner";
 
@@ -42,16 +43,14 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
   const updateProfileFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      src: details?.src,
-      srcType: details?.srcType,
-      srcAuthor: details?.srcAuthor,
-      content: details?.content,
+      src: details?.src ?? "",
+      srcType: details?.srcType ?? HighlightSrcType.Quote,
+      srcAuthor: details?.srcAuthor ?? "",
+      content: details?.content ?? "",
     },
     validationSchema: updateHighlightSchema,
     onSubmit: async (values) => {
       const { src, srcType, srcAuthor, content } = values;
-
-      console.log({ values, isChanged: isHighlightChanged(values) });
 
       if (isHighlightChanged(values)) {
         loadingSet(true);
@@ -77,54 +76,25 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
   return (
     <form onSubmit={updateProfileFormik.handleSubmit} className="space-y-5">
       {/* Source */}
-      <div className="flex flex-col">
-        <label htmlFor="src" className="form-label">
-          Source
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.src
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <AnnotationIcon className="form-input-icon" />
-          </div>
-          <input
-            id="src"
-            name="src"
-            type="text"
-            className="form-input"
-            placeholder="Enter highlight's source"
-            onBlur={updateProfileFormik.handleBlur}
-            value={updateProfileFormik.values.src}
-            onChange={updateProfileFormik.handleChange}
-          />
-        </div>
-        {updateProfileFormik.errors.src && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.src}
-          </p>
-        )}
-      </div>
+      <FormItem
+        name="src"
+        type="text"
+        label="Source"
+        SideIcon={AnnotationIcon}
+        placeholder="Enter highlight's source"
+        errorValue={updateProfileFormik.errors.src}
+        inputValue={updateProfileFormik.values.src}
+        onBlurAction={updateProfileFormik.handleBlur}
+        onChangeAction={updateProfileFormik.handleChange}
+      />
 
       {/* Source Type */}
-      <div className="flex flex-col">
-        <label htmlFor="srcType" className="form-label">
-          Source Type
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.srcType
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <CollectionIcon className="form-input-icon" />
-          </div>
-
+      <FormItem
+        required
+        label="Source Type"
+        isCustomInput={true}
+        SideIcon={CollectionIcon}
+        CustomInput={
           <SelectInput
             title="Select Type"
             options={Object.keys(HighlightSrcType)}
@@ -133,66 +103,33 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
               updateProfileFormik.setFieldValue("srcType", option)
             }
           />
-        </div>
-        {updateProfileFormik.errors.srcType && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.srcType}
-          </p>
-        )}
-      </div>
+        }
+        errorValue={updateProfileFormik.errors.srcType}
+      />
 
       {/* Source Author */}
-      <div className="flex flex-col">
-        <label htmlFor="srcAuthor" className="form-label">
-          Author
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.srcAuthor
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <IdentificationIcon className="form-input-icon" />
-          </div>
-          <input
-            type="text"
-            id="srcAuthor"
-            name="srcAuthor"
-            className="form-input"
-            placeholder="Enter Highlight Author"
-            onBlur={updateProfileFormik.handleBlur}
-            value={updateProfileFormik.values.srcAuthor}
-            onChange={({ target: { value } }) =>
-              updateProfileFormik.setFieldValue("srcAuthor", value)
-            }
-          />
-        </div>
-        {updateProfileFormik.errors.srcAuthor && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.srcAuthor}
-          </p>
-        )}
-      </div>
+      <FormItem
+        type="text"
+        label="Author"
+        name="srcAuthor"
+        SideIcon={IdentificationIcon}
+        placeholder="Enter Highlight Author"
+        onBlurAction={updateProfileFormik.handleBlur}
+        errorValue={updateProfileFormik.errors.srcAuthor}
+        inputValue={updateProfileFormik.values.srcAuthor}
+        onChangeAction={({ target: { value } }) =>
+          updateProfileFormik.setFieldValue("srcAuthor", value)
+        }
+      />
 
       {/* Content */}
-      <div className="flex flex-col">
-        <label htmlFor="content" className="form-label">
-          Content
-        </label>
-        <div
-          className={`form-input-container ${
-            updateProfileFormik.errors.content
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <BookOpenIcon className="form-input-icon" />
-          </div>
+      <FormItem
+        label="Content"
+        isCustomInput={true}
+        SideIcon={BookOpenIcon}
+        errorValue={updateProfileFormik.errors.content}
+        CustomInput={
           <textarea
-            cols="50"
             id="content"
             name="content"
             autoCorrect="on"
@@ -203,13 +140,8 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
               updateProfileFormik.setFieldValue("content", value)
             }
           />
-        </div>
-        {updateProfileFormik.errors.content && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {updateProfileFormik.errors.content}
-          </p>
-        )}
-      </div>
+        }
+      />
 
       <div className="flex w-full">
         <button type="submit" className="form-button">
@@ -217,7 +149,7 @@ const UpdateHighlight = ({ closeModal, highlightId, details }) => {
           {loading ? (
             <Spinner type={SpinnerTypes.SMALL} />
           ) : (
-            <ArrowCircleRightIcon className="w-6 h-6" />
+            <ArrowCircleRightIcon className="h-6 w-6" />
           )}
         </button>
       </div>

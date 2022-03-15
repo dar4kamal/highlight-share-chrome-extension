@@ -5,15 +5,14 @@ import HighlightCard from "./units/HighlightCard";
 import Spinner, { SpinnerTypes } from "./units/Spinner";
 
 import { FilterOptions } from "../utils/types";
-import getselectedHighlights from "../utils/getselectedHighlights";
+import getSelectedHighlights from "../utils/getSelectedHighlights";
 
-const Highlights = ({ currentOption, currentUser }) => {
+const Highlights = ({ currentOption, currentUser, onAction, onActionSet }) => {
   const [loading, setLoading] = useState(true);
-  const [onAction, onActionSet] = useState(false);
   const [highlights, highlightsSet] = useState(null);
 
   useEffect(async () => {
-    highlightsSet(await getselectedHighlights(currentOption));
+    highlightsSet(await getSelectedHighlights(currentOption));
     setLoading(false);
   }, [currentOption?.value, onAction]);
 
@@ -48,8 +47,8 @@ const Highlights = ({ currentOption, currentUser }) => {
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
           {highlights.map((item) => (
             <HighlightCard
+              key={item?.id}
               highlight={item}
-              key={item.content}
               onAction={onAction}
               onActionSet={onActionSet}
               currentUser={currentUser}

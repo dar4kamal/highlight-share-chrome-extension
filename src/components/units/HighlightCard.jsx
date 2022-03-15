@@ -35,6 +35,17 @@ const HighlightCard = ({ onAction, onActionSet, highlight, currentUser }) => {
   const [favourite, favouriteSet] = useState(isFavorite);
   const [showUpdateModal, showUpdateModalSet] = useState(null);
 
+  const onApiUpdate = async (endpoint, actionOnSuccess) => {
+    loadingSet(true);
+    const updateStatus = await apiPatchRequest(endpoint, {});
+    loadingSet(false);
+    if (updateStatus) {
+      onActionSet(!onAction);
+      actionOnSuccess();
+      toast.success(updateStatus);
+    }
+  };
+
   const isBelongsToUser = user?.email === currentUser?.email;
 
   return (
@@ -54,10 +65,10 @@ const HighlightCard = ({ onAction, onActionSet, highlight, currentUser }) => {
           />
         )}
       />
-      <blockquote className="relative flex col-span-2 p-5 bg-white border-2 rounded-xl text-primary dark:bg-secondary">
+      <blockquote className="relative col-span-2 flex rounded-xl border-2 bg-white p-5 text-primary dark:bg-secondary">
         {isBelongsToUser && (
           <DotsVerticalIcon
-            className="absolute card-action-icon top-3 right-3"
+            className="card-action-icon absolute top-3 right-3"
             onClick={() => showUpdateModalSet(true)}
           />
         )}
@@ -76,43 +87,25 @@ const HighlightCard = ({ onAction, onActionSet, highlight, currentUser }) => {
                 <div className="flex">
                   <IconWrapper
                     className="card-action-icon"
-                    onAction={async () => {
-                      loadingSet(true);
-                      const updateStatus = await apiPatchRequest(
-                        `highlights/privacy/${id}`,
-                        {}
-                      );
-                      loadingSet(false);
-                      if (updateStatus) {
-                        onActionSet(!onAction);
-
-                        privacySet(!privacy);
-                        toast.success(updateStatus);
-                      }
-                    }}
                     Icon={privacy ? LockClosedIcon : GlobeIcon}
                     title={privacy ? "Set Public" : "Set Private"}
+                    onAction={() =>
+                      onApiUpdate(`highlights/privacy/${id}`, () =>
+                        privacySet(!privacy)
+                      )
+                    }
                   />
                   <IconWrapper
                     Icon={StarIcon}
-                    title={favourite ? "UnFavorite" : "Favorite"}
                     className={`card-action-icon ${
                       favourite && "fill-yellow-500"
                     }`}
-                    onAction={async () => {
-                      loadingSet(true);
-                      const updateStatus = await apiPatchRequest(
-                        `highlights/fav/${id}`,
-                        {}
-                      );
-                      loadingSet(false);
-                      if (updateStatus) {
-                        onActionSet(!onAction);
-
-                        favouriteSet(!favourite);
-                        toast.success(updateStatus);
-                      }
-                    }}
+                    title={favourite ? "UnFavorite" : "Favorite"}
+                    onAction={() =>
+                      onApiUpdate(`highlights/fav/${id}`, () =>
+                        favouriteSet(!favourite)
+                      )
+                    }
                   />
                 </div>
               )

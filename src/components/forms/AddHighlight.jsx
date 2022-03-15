@@ -11,6 +11,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
+import FormItem from "../units/FormItem";
 import SelectInput from "../units/SelectInput";
 import Spinner, { SpinnerTypes } from "../units/Spinner";
 
@@ -48,55 +49,26 @@ const AddHighlight = ({ closeModal, initialValues }) => {
   return (
     <form onSubmit={addHighlightFormik.handleSubmit} className="space-y-5">
       {/* Source */}
-      <div className="flex flex-col">
-        <label htmlFor="src" className="form-label">
-          Source
-        </label>
-        <div
-          className={`form-input-container ${
-            addHighlightFormik.errors.src
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <AnnotationIcon className="form-input-icon" />
-          </div>
-          <input
-            required
-            id="src"
-            name="src"
-            type="text"
-            className="form-input"
-            placeholder="Enter highlight's source"
-            onBlur={addHighlightFormik.handleBlur}
-            value={addHighlightFormik.values.src}
-            onChange={addHighlightFormik.handleChange}
-          />
-        </div>
-        {addHighlightFormik.errors.src && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {addHighlightFormik.errors.src}
-          </p>
-        )}
-      </div>
+      <FormItem
+        required
+        name="src"
+        type="text"
+        label="Source"
+        SideIcon={AnnotationIcon}
+        placeholder="Enter highlight's source"
+        errorValue={addHighlightFormik.errors.src}
+        inputValue={addHighlightFormik.values.src}
+        onBlurAction={addHighlightFormik.handleBlur}
+        onChangeAction={addHighlightFormik.handleChange}
+      />
 
       {/* Source Type */}
-      <div className="flex flex-col">
-        <label htmlFor="srcType" className="form-label">
-          Source Type
-        </label>
-        <div
-          className={`form-input-container ${
-            addHighlightFormik.errors.srcType
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <CollectionIcon className="form-input-icon" />
-          </div>
-
+      <FormItem
+        required
+        label="Source Type"
+        isCustomInput={true}
+        SideIcon={CollectionIcon}
+        CustomInput={
           <SelectInput
             title="Select Type"
             options={Object.keys(HighlightSrcType)}
@@ -104,66 +76,35 @@ const AddHighlight = ({ closeModal, initialValues }) => {
               addHighlightFormik.setFieldValue("srcType", option)
             }
           />
-        </div>
-        {addHighlightFormik.errors.srcType && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {addHighlightFormik.errors.srcType}
-          </p>
-        )}
-      </div>
+        }
+        errorValue={addHighlightFormik.errors.srcType}
+      />
 
       {/* Source Author */}
-      <div className="flex flex-col">
-        <label htmlFor="srcAuthor" className="form-label">
-          Author
-        </label>
-        <div
-          className={`form-input-container ${
-            addHighlightFormik.errors.srcAuthor
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <IdentificationIcon className="form-input-icon" />
-          </div>
-          <input
-            required
-            type="text"
-            id="srcAuthor"
-            name="srcAuthor"
-            className="form-input"
-            placeholder="Enter Highlight Author"
-            onBlur={addHighlightFormik.handleBlur}
-            value={addHighlightFormik.values.srcAuthor}
-            onChange={({ target: { value } }) =>
-              addHighlightFormik.setFieldValue("srcAuthor", value)
-            }
-          />
-        </div>
-        {addHighlightFormik.errors.srcAuthor && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {addHighlightFormik.errors.srcAuthor}
-          </p>
-        )}
-      </div>
+      <FormItem
+        required
+        type="text"
+        label="Author"
+        name="srcAuthor"
+        SideIcon={IdentificationIcon}
+        placeholder="Enter Highlight Author"
+        onBlurAction={addHighlightFormik.handleBlur}
+        errorValue={addHighlightFormik.errors.srcAuthor}
+        inputValue={addHighlightFormik.values.srcAuthor}
+        onChangeAction={({ target: { value } }) =>
+          addHighlightFormik.setFieldValue("srcAuthor", value)
+        }
+      />
 
       {/* Content */}
-      <div className="flex flex-col">
-        <label htmlFor="content" className="form-label">
-          Content
-        </label>
-        <div
-          className={`form-input-container ${
-            addHighlightFormik.errors.content
-              ? "border-error-dark dark:border-error-dark"
-              : ""
-          }`}
-        >
-          <div className="w-10 h-full pl-2">
-            <BookOpenIcon className="form-input-icon" />
-          </div>
+      <FormItem
+        label="Content"
+        isCustomInput={true}
+        SideIcon={BookOpenIcon}
+        errorValue={addHighlightFormik.errors.content}
+        CustomInput={
           <textarea
+            required
             id="content"
             name="content"
             autoCorrect="on"
@@ -174,13 +115,8 @@ const AddHighlight = ({ closeModal, initialValues }) => {
               addHighlightFormik.setFieldValue("content", value)
             }
           />
-        </div>
-        {addHighlightFormik.errors.content && (
-          <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-            {addHighlightFormik.errors.content}
-          </p>
-        )}
-      </div>
+        }
+      />
 
       {/* Submit Button */}
       <div className="flex w-full">
@@ -189,7 +125,7 @@ const AddHighlight = ({ closeModal, initialValues }) => {
           {loading ? (
             <Spinner type={SpinnerTypes.SMALL} />
           ) : (
-            <ArrowCircleRightIcon className="w-6 h-6" />
+            <ArrowCircleRightIcon className="h-6 w-6" />
           )}
         </button>
       </div>

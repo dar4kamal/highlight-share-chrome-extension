@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import {
-  EyeIcon,
-  EyeOffIcon,
-  LockClosedIcon,
-  ArrowCircleRightIcon,
-} from "@heroicons/react/outline";
+import { LockClosedIcon, ArrowCircleRightIcon } from "@heroicons/react/outline";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
+import FormItem from "../units/FormItem";
+import TogglePassword from "../units/TogglePassword";
 import Spinner, { SpinnerTypes } from "../units/Spinner";
 
 import { apiPostRequest } from "../../utils/api/apiMethods";
@@ -76,50 +73,28 @@ const ChangePassword = ({ closeModal }) => {
         const { showValue, action } = showOptions(key);
 
         return (
-          <div key={key} className="flex flex-col">
-            <label htmlFor={key} className="form-label">
-              {`${key.split("Password").join("")} Password`}
-            </label>
-            <div
-              className={`form-input-container ${
-                changePasswordFormik.errors[key]
-                  ? "border-error-dark dark:border-error-dark"
-                  : ""
-              }`}
-            >
-              <div className="h-full w-10 pl-2">
-                <LockClosedIcon className="form-input-icon" />
-              </div>
-              <input
-                required
-                id={key}
-                name={key}
-                className="form-input"
-                type={showValue ? "text" : "password"}
-                value={changePasswordFormik.values[key]}
-                onBlur={changePasswordFormik.handleBlur}
-                onChange={({ target: { value } }) =>
-                  changePasswordFormik.setFieldValue(key, value)
-                }
-                placeholder={`Enter ${key.split("Password").join("")} Password`}
+          <FormItem
+            required
+            key={key}
+            name={key}
+            isPasswordInput={true}
+            SideIcon={LockClosedIcon}
+            type={showValue ? "text" : "password"}
+            inputValue={changePasswordFormik.values[key]}
+            errorValue={changePasswordFormik.errors[key]}
+            onBlurAction={changePasswordFormik.handleBlur}
+            label={`${key.split("Password").join("")} Password`}
+            placeholder={`Enter ${key.split("Password").join("")} Password`}
+            TogglePassword={
+              <TogglePassword
+                showPassword={showValue}
+                showPasswordSet={action}
               />
-              <div
-                onClick={() => action(!showValue)}
-                className="h-full w-10 cursor-pointer pl-2"
-              >
-                {showValue ? (
-                  <EyeOffIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
-                ) : (
-                  <EyeIcon className="form-input-icon hover:text-action-lighter dark:hover:text-action-light" />
-                )}
-              </div>
-            </div>
-            {changePasswordFormik.errors[key] && (
-              <p className="pt-2 pl-2 text-sm text-error-dark dark:text-error-light">
-                {changePasswordFormik.errors[key]}
-              </p>
-            )}
-          </div>
+            }
+            onChangeAction={({ target: { value } }) =>
+              changePasswordFormik.setFieldValue(key, value)
+            }
+          />
         );
       })}
 

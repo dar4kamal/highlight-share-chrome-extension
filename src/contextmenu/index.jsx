@@ -28,7 +28,7 @@ const ContextMenu = () => {
   }, [selectedContent]);
 
   return (
-    <div className="m-5">
+    <div className="p-5">
       <AddHighlight
         closeModal={() => {
           showNotification("Your Highlight have been added successfully", () =>

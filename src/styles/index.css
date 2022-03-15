@@ -7,37 +7,36 @@ svg path {
 }
 
 .external-link {
-  @apply px-1 cursor-pointer text-action-dark hover:text-action-lighter;
+  @apply cursor-pointer px-1 text-action-dark hover:text-action-lighter;
 }
 
 .action-icon {
-  @apply w-8 h-8 cursor-pointer text-action-dark hover:text-action-lighter dark:text-action-lighter dark:hover:text-secondary;
+  @apply h-8 w-8 cursor-pointer text-action-dark hover:text-action-lighter dark:text-action-lighter dark:hover:text-secondary;
 }
 
 .card-action-icon {
-  @apply w-8 h-8 cursor-pointer text-action-dark hover:text-action-lighter;
+  @apply h-8 w-8 cursor-pointer text-action-dark hover:text-action-lighter;
 }
 
 .form-label {
-  @apply mb-1 text-sm tracking-wide text-opacity-75 text-primary dark:text-secondary;
+  @apply mb-1 text-sm tracking-wide text-primary text-opacity-75 dark:text-secondary;
 }
 
 .form-input-container {
-  @apply flex items-center justify-start text-sm border-2 border-opacity-75 rounded-2xl border-primary dark:border-secondary dark:border-opacity-75;
+  @apply flex items-center justify-start rounded-2xl border-2 border-opacity-75 text-sm dark:border-opacity-75;
 }
-
 .form-input-icon {
-  @apply w-6 h-6 text-action-dark dark:text-action-lighter;
+  @apply h-6 w-6 text-action-dark dark:text-action-lighter;
 }
 
 .form-input {
-  @apply py-2 mr-2 placeholder-gray-500 bg-transparent text-primary focus:border-action-light focus:outline-none dark:text-secondary;
+  @apply mr-2 bg-transparent py-2 text-primary placeholder-gray-500 focus:border-action-light focus:outline-none dark:text-secondary;
 }
 
 textarea {
-  @apply w-full leading-relaxed tracking-wide appearance-none resize-none form-input;
+  @apply form-input w-full resize-none appearance-none leading-relaxed tracking-wide;
 }
 
 .form-button {
-  @apply flex items-center justify-center w-full py-2 mt-2 text-base transition duration-150 ease-in rounded-2xl bg-action-light text-secondary hover:bg-action-dark focus:outline-none;
+  @apply mt-2 flex w-full items-center justify-center rounded-2xl bg-action-light py-2 text-base text-secondary transition duration-150 ease-in hover:bg-action-dark focus:outline-none;
 }
