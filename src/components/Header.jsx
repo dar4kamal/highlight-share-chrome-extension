@@ -19,23 +19,26 @@ import Register from "./forms/Register";
 import UpdateProfile from "./forms/UpdateProfile";
 import ChangePassword from "./forms/ChangePassword";
 
+import useDarkMode from "../utils/hooks/useDarkMode";
+import useTodayDate from "../utils/hooks/useTodayDate";
+
 import setAuthToken from "../utils/api/setAuthToken";
 import { FilterDisplayOptions } from "../utils/types";
 import { apiGetRequest } from "../utils/api/apiMethods";
 import { getItem, removeItems, setItem } from "../utils/handleStorage";
 
 const Header = ({
-  todayDate,
-  darkMode,
-  darkModeSet,
-  currentUser,
-  currentUserSet,
   currentOption,
   updateOption,
+  currentUser,
+  currentUserSet,
 }) => {
   const [token, tokenSet] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+
+  const todayDate = useTodayDate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(async () => {
     const authToken = await getItem("authToken");
@@ -96,18 +99,18 @@ const Header = ({
         } flex-wrap items-center justify-between bg-secondary text-xl text-primary shadow-md dark:bg-primary dark:text-secondary
         dark:shadow-sm dark:shadow-secondary sm:flex-row sm:justify-between xs:flex-row`}
       >
-        <div className="order-1 my-5 ml-5 flex items-center justify-between gap-5 place-self-start sm:order-none">
+        <div className="flex items-center justify-between order-1 gap-5 my-5 ml-5 place-self-start sm:order-none">
           <IconWrapper
             title=""
             className="action-icon"
+            onAction={toggleDarkMode}
             Icon={darkMode ? SunIcon : MoonIcon}
-            onAction={() => darkModeSet(!darkMode)}
           />
           <p>{todayDate}</p>
         </div>
         <div className="order-last mx-auto sm:order-none">
           <FilterMenu
-            UpdateOption={updateOption}
+            updateOption={updateOption}
             currentOption={currentOption}
             options={FilterDisplayOptions}
             MenuIcon={() => (
@@ -118,7 +121,7 @@ const Header = ({
           />
         </div>
         {token && currentUser ? (
-          <div className="order-2 mx-5 my-5 flex gap-1 place-self-end sm:order-none">
+          <div className="flex order-2 gap-1 mx-5 my-5 place-self-end sm:order-none">
             <p>{currentUser?.name}</p>
             <div title="Profile Setting">
               <CogIcon
@@ -131,7 +134,7 @@ const Header = ({
             </div>
           </div>
         ) : (
-          <div className="order-2 mx-5 place-self-end py-5 sm:order-none">
+          <div className="order-2 py-5 mx-5 place-self-end sm:order-none">
             <FingerPrintIcon
               className="action-icon"
               onClick={() => setShowAuthModal(true)}

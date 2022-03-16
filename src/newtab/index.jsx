@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 
 import "../styles/index.css";
@@ -25,49 +25,22 @@ toast.configure({
 const App = () => {
   const [user, userSet] = useState(null);
   const [onAction, onActionSet] = useState(false);
-  const [todayDate, todayDateSet] = useState("");
-  const [currentOption, currentOptionSet] = useState(null);
   const [showAddModal, showAddModalSet] = useState(null);
-  const [isDarkModeEnabled, isDarkModeEnabledSet] = useState(null);
+  const [currentOption, currentOptionSet] = useState(null);
 
   const updateOption = (option) => {
     setItem("currentOption", option);
     currentOptionSet(option);
   };
 
-  // Dark Mode Settings
-  useEffect(async () => {
-    const darkMode = await getItem("darkMode");
-    isDarkModeEnabledSet(darkMode);
-  }, []);
-
-  useEffect(async () => {
-    !isDarkModeEnabled
-      ? document.documentElement.classList.remove("dark")
-      : document.documentElement.classList.add("dark");
-    setItem("darkMode", isDarkModeEnabled);
-  }, [isDarkModeEnabled]);
-
-  // Date
-  useEffect(async () => {
-    todayDateSet(
-      new Date().toLocaleDateString("en-us", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    );
-  }, []);
-
-  // Select Options
   useEffect(async () => {
     const savedOption = await getItem("currentOption");
     if (!savedOption) setItem("currentOption", FilterDisplayOptions[0]);
     else currentOptionSet(savedOption);
-  }, []);
+  }, [currentOption?.value]);
 
   return (
-    <div className="relative flex h-screen w-screen flex-col">
+    <div className="relative flex flex-col w-screen h-screen">
       <Modal
         title="Add New Highlight"
         showModal={showAddModal}
@@ -90,12 +63,8 @@ const App = () => {
       <Header
         currentUser={user}
         currentUserSet={userSet}
-        todayDate={todayDate}
         updateOption={updateOption}
         currentOption={currentOption}
-        darkMode={isDarkModeEnabled}
-        darkModeSet={isDarkModeEnabledSet}
-        currentOptionSet={currentOptionSet}
       />
       <div className="flex-auto bg-secondary dark:bg-primary">
         <Main
@@ -108,9 +77,9 @@ const App = () => {
       <Footer />
       <div
         onClick={() => showAddModalSet(true)}
-        className="fixed right-10 bottom-36 z-40 cursor-pointer rounded-full bg-action-dark p-3 text-white hover:bg-white hover:text-action-dark md:bottom-20 md:p-4 lg:mb-5 xs:bottom-16"
+        className="fixed z-40 p-3 text-white rounded-full cursor-pointer right-10 bottom-36 bg-action-dark hover:bg-white hover:text-action-dark md:bottom-20 md:p-4 lg:mb-5 xs:bottom-16"
       >
-        <PlusIcon className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10" />
+        <PlusIcon className="w-6 h-6 sm:h-8 sm:w-8 md:h-10 md:w-10" />
       </div>
       <ToastContainer bodyClassName="text-lg" />
     </div>
