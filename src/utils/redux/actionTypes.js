@@ -1,0 +1,3 @@
+// View
+export const UPDATE_VIEW_OPTION = "UPDATE_VIEW_OPTION";
+export const RESET_VIEW_OPTION = "RESET_VIEW_OPTION";

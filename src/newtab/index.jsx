@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
+import { Provider } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import "../styles/index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,8 +15,11 @@ import Header from "../components/Header";
 import Modal from "../components/units/Modal";
 import AddHighlight from "../components/forms/AddHighlight";
 
-import { getItem, setItem } from "../utils/handleStorage";
-import { FilterDisplayOptions, HighlightSrcType } from "../utils/types";
+import { getItem } from "../utils/handleStorage";
+import { HighlightSrcType } from "../utils/types";
+
+import store from "../utils/redux/store";
+import { resetOption, updateOption } from "../utils/redux/actions/view";
 
 toast.configure({
   autoClose: 2000,
@@ -26,18 +31,15 @@ const App = () => {
   const [user, userSet] = useState(null);
   const [onAction, onActionSet] = useState(false);
   const [showAddModal, showAddModalSet] = useState(null);
-  const [currentOption, currentOptionSet] = useState(null);
 
-  const updateOption = (option) => {
-    setItem("currentOption", option);
-    currentOptionSet(option);
-  };
+  const viewOption = useSelector((state) => state.view);
+  const dispatch = useDispatch();
 
   useEffect(async () => {
     const savedOption = await getItem("currentOption");
-    if (!savedOption) setItem("currentOption", FilterDisplayOptions[0]);
-    else currentOptionSet(savedOption);
-  }, [currentOption?.value]);
+    if (!savedOption) dispatch(resetOption());
+    else dispatch(updateOption(savedOption));
+  }, [viewOption?.value]);
 
   return (
     <div className="relative flex flex-col w-screen h-screen">
@@ -60,16 +62,10 @@ const App = () => {
           />
         )}
       />
-      <Header
-        currentUser={user}
-        currentUserSet={userSet}
-        updateOption={updateOption}
-        currentOption={currentOption}
-      />
+      <Header currentUser={user} currentUserSet={userSet} />
       <div className="flex-auto bg-secondary dark:bg-primary">
         <Main
           currentUser={user}
-          currentOption={currentOption}
           onAction={onAction}
           onActionSet={onActionSet}
         />
@@ -86,4 +82,9 @@ const App = () => {
   );
 };
 
-render(<App />, document.querySelector("#root"));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.querySelector("#root")
+);

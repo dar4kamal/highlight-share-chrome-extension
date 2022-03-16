@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
 import ErrorCard from "./units/ErrorCard";
@@ -7,14 +8,16 @@ import Spinner, { SpinnerTypes } from "./units/Spinner";
 import { FilterOptions } from "../utils/types";
 import getSelectedHighlights from "../utils/getSelectedHighlights";
 
-const Highlights = ({ currentOption, currentUser, onAction, onActionSet }) => {
+const Highlights = ({ currentUser, onAction, onActionSet }) => {
   const [loading, setLoading] = useState(true);
   const [highlights, highlightsSet] = useState(null);
 
+  const viewOption = useSelector((state) => state.view);
+
   useEffect(async () => {
-    highlightsSet(await getSelectedHighlights(currentOption));
+    highlightsSet(await getSelectedHighlights(viewOption));
     setLoading(false);
-  }, [currentOption?.value, onAction]);
+  }, [viewOption?.value, onAction]);
 
   if (loading) return <Spinner type={SpinnerTypes.LARGE} />;
   if (!loading && !highlights)
@@ -23,7 +26,7 @@ const Highlights = ({ currentOption, currentUser, onAction, onActionSet }) => {
     );
 
   if (highlights?.length < 1)
-    switch (currentOption?.value) {
+    switch (viewOption?.value) {
       case FilterOptions.Private:
         return (
           <ErrorCard message="Either, There are no available highlights Or all of them are public" />

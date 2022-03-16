@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import {
   SunIcon,
@@ -22,17 +23,15 @@ import ChangePassword from "./forms/ChangePassword";
 import useDarkMode from "../utils/hooks/useDarkMode";
 import useTodayDate from "../utils/hooks/useTodayDate";
 
+import { resetOption } from "../utils/redux/actions/view";
+
 import setAuthToken from "../utils/api/setAuthToken";
-import { FilterDisplayOptions } from "../utils/types";
 import { apiGetRequest } from "../utils/api/apiMethods";
 import { getItem, removeItems, setItem } from "../utils/handleStorage";
 
-const Header = ({
-  currentOption,
-  updateOption,
-  currentUser,
-  currentUserSet,
-}) => {
+const Header = ({ currentUser, currentUserSet }) => {
+  const dispatch = useDispatch();
+
   const [token, tokenSet] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -55,7 +54,7 @@ const Header = ({
 
   const logout = async () => {
     await removeItems(["userInfo", "authToken"]);
-    updateOption(FilterDisplayOptions[0]);
+    dispatch(resetOption());
     currentUserSet(null);
     tokenSet(null);
   };
@@ -110,9 +109,6 @@ const Header = ({
         </div>
         <div className="order-last mx-auto sm:order-none">
           <FilterMenu
-            updateOption={updateOption}
-            currentOption={currentOption}
-            options={FilterDisplayOptions}
             MenuIcon={() => (
               <div className="p-2">
                 <AdjustmentsIcon className="action-icon" />
